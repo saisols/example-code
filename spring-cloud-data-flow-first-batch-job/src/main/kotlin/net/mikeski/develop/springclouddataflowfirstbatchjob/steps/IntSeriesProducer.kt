@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service
 class IntSeriesProducer : ItemReader<Int> {
     private var currentValue = 1
     private var maxValue = 100
+
     override fun read(): Int? {
         if(currentValue > maxValue){
             return null

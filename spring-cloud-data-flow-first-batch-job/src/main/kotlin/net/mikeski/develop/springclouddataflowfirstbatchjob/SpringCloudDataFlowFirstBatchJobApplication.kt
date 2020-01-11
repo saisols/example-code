@@ -7,8 +7,10 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerA
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration
 import org.springframework.boot.runApplication
 import org.springframework.cloud.task.configuration.EnableTask
+import org.springframework.context.annotation.Import
 
-@SpringBootApplication(exclude = [DataSourceAutoConfiguration::class, DataSourceTransactionManagerAutoConfiguration::class, HibernateJpaAutoConfiguration::class])
+//@SpringBootApplication
+@Import(DatabaseConfig::class, BatchConfiguration::class)
 @EnableTask
 @EnableBatchProcessing
 class SpringCloudDataFlowFirstBatchJobApplication

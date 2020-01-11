@@ -6,11 +6,14 @@ import net.mikeski.develop.springclouddataflowfirstbatchjob.steps.SquaringIntPro
 import org.springframework.batch.core.Job
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory
+import org.springframework.batch.core.launch.support.RunIdIncrementer
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.ComponentScan
 import org.springframework.context.annotation.Configuration
 
 @Configuration
+@ComponentScan
 class BatchConfiguration {
     @Autowired
     lateinit var intSeriesProducer: IntSeriesProducer
@@ -23,12 +26,12 @@ class BatchConfiguration {
 
     @Bean
     fun jobLogAllFiltereddTextItemsAndFailuresImperative(jbf: JobBuilderFactory, sbf: StepBuilderFactory): Job {
-        return jbf.get("int-squaring-job").start(
+        return jbf.get("int-squaring-job").incrementer(RunIdIncrementer()).flow(
                 sbf.get("int-squaring-job-step1")
                         .chunk<Int, Int>(1)
                         .reader(intSeriesProducer)
                         .processor(squaringIntProcessor)
                         .writer(intLoggingWriter)
-                        .build()).build()
+                        .build()).end().build()
     }
 }

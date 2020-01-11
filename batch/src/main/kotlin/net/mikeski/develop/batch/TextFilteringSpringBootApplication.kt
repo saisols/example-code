@@ -18,16 +18,19 @@ import org.springframework.retry.annotation.EnableRetry
 
 @SpringBootApplication(exclude = [DataSourceAutoConfiguration::class, DataSourceTransactionManagerAutoConfiguration::class, HibernateJpaAutoConfiguration::class])
 @EnableBatchProcessing
-@EnableRetry(proxyTargetClass=true)
+@EnableRetry(proxyTargetClass = true)
 class TextFilteringSpringBootApplication {
 
-    @Autowired lateinit var textFilteringProcessorDeclarativeRetryDefaultConfiguration: TextFilteringProcessorDeclarativeRetryDefaultConfiguration
+    @Autowired
+    lateinit var textFilteringProcessorDeclarativeRetryDefaultConfiguration: TextFilteringProcessorDeclarativeRetryDefaultConfiguration
 
-    @Autowired lateinit var textFilteringProcessorDeclarativeRetryAnnotatedConfiguration: TextFilteringProcessorDeclarativeRetryAnnotatedConfiguration
+    @Autowired
+    lateinit var textFilteringProcessorDeclarativeRetryAnnotatedConfiguration: TextFilteringProcessorDeclarativeRetryAnnotatedConfiguration
 
-    @Autowired lateinit var textFilteringProcessorDeclarativeRetryImperativeConfiguration: TextFilteringProcessorDeclarativeRetryImperativeConfiguration
+    @Autowired
+    lateinit var textFilteringProcessorDeclarativeRetryImperativeConfiguration: TextFilteringProcessorDeclarativeRetryImperativeConfiguration
 
-    @Bean(name=["Batch example 1"])
+    @Bean(name = ["Batch example 1"])
     fun jobLogAllFilteredTextItems(jbf: JobBuilderFactory, sbf: StepBuilderFactory): Job {
         return jbf.get("demo-text-job1").start(
                 sbf.get("demo-text-step1")
@@ -38,7 +41,7 @@ class TextFilteringSpringBootApplication {
                         .build()).build()
     }
 
-    @Bean(name=["Batch example 2"])
+    @Bean(name = ["Batch example 2"])
     fun jobLogAllFiltereddTextItemsAndFailures(jbf: JobBuilderFactory, sbf: StepBuilderFactory): Job {
         return jbf.get("demo-text-job2").start(
                 sbf.get("demo-text-step2")
@@ -49,7 +52,7 @@ class TextFilteringSpringBootApplication {
                         .build()).build()
     }
 
-    @Bean(name=["Batch example 3"])
+    @Bean(name = ["Batch example 3"])
     fun jobLogAllFiltereddTextItemsAndFailuresConfigured(jbf: JobBuilderFactory, sbf: StepBuilderFactory): Job {
         return jbf.get("demo-text-job3").start(
                 sbf.get("demo-text-step3")
@@ -60,7 +63,7 @@ class TextFilteringSpringBootApplication {
                         .build()).build()
     }
 
-    @Bean(name=["Batch example 4"])
+    @Bean(name = ["Batch example 4"])
     fun jobLogAllFiltereddTextItemsAndFailuresImperative(jbf: JobBuilderFactory, sbf: StepBuilderFactory): Job {
         return jbf.get("demo-text-job4").start(
                 sbf.get("demo-text-step4")
