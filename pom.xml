@@ -17,6 +17,7 @@
 
 	<modules>
 		<module>batch</module>
+		<module>batch-csv-writer</module>
 		<module>spring-cloud-data-flow-first-batch-job</module>
 	</modules>
 
